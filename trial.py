@@ -197,7 +197,7 @@ for i in range(m):
 M.update()
 
 
-'''constraint: nurses' total time available ia planning horizon'''
+'''constraint: nurses' total time available in planning horizon'''
 for i in range(m):
     for j in range(n):
         for l in range(n):
@@ -241,4 +241,4 @@ print('\nnurses\n', df_n.head())
 np.set_printoptions(formatter={'float': '{: 0.0f}'.format})
 
 print('\nobj\n', int(M.objVal), '\nq\n', q, '\nf\n', f, '\nd\n', var_d,
-      '\nx\n', var_x, '\ny\n', var_y, '\n\ns', var_s, '\nz\n', var_z[0, :, :, 4])
+      '\nx\n', var_x, '\ny\n', var_y, '\n\ns', var_s[0,:,0], '\n',var_s[1,:,0], '\nz\n', var_z[0, :, :, 0])
