@@ -19,7 +19,7 @@ def printSolution(M, solution_d, solution_x, solution_y, solution_z, solution_s,
     print('\nnurses\n', df_n.head())
     np.set_printoptions(formatter={'float': '{: 0.0f}'.format})
 
-    print('\nobj\n', int(M.objVal),
+    print(
           '\nq\n', q,
           '\nf\n', f,
           '\nd\n', var_d,
@@ -27,4 +27,6 @@ def printSolution(M, solution_d, solution_x, solution_y, solution_z, solution_s,
           '\ny\n', var_y,
           '\n\ns', var_s[0, :, 0],
           '\n', var_s[1, :, 0],
-          '\nz\n', var_z[0, :, :, 0])
+          '\nz\n', var_z[0, :, :, 0],
+          '\nobj\n', int(M.objVal)
+          )
