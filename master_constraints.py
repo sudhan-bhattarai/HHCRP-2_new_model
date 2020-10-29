@@ -17,13 +17,6 @@ def masterConstraints(M, d, x, y, m, n, t, q, q2, q3, Q, nN, f, gb):
     '''constraint 4'''
     for i in range(m):
         for j in range(n):
-            # if nN[j+1] == 1:
-            #     if q[j+1] != Q[i]:
-            #         M.addConstr(x[i, j] == 0)
-            # if nN[j+1] == 2:
-            #     if q[j+1] != Q[i] or q2[j+1] != Q[i]:
-            #         M.addConstr(x[i, j] == 0)
-            # if nN[j+1] == 3:
             if q[j+1] != Q[i] and q2[j+1] != Q[i] and q3[j+1] != Q[i]:
                 M.addConstr(x[i, j] == 0)
     M.update()

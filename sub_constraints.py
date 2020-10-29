@@ -37,11 +37,11 @@ def subConstraints(M, y, z, s, m, n, t, nN, et, lt, sd, grid, bigM, df_n, df, gb
                                 df_n["Time"][i] / t + bigM * (1 - z[i, l + 1, 0, k]) + bigM * (1 - z[i, 0, j + 1, k]))
     M.update()
 
-    # for i in range(m):
-    #     for k in range(t):
-    #         for j in range(n):
-    #             for l in range(n):
-    #
-    #                 '''scheduling constraint'''
-    #                 M.addConstr(s[i, j + 1, k] + (sd[j + 1] + grid[j + 1, l]) * z[i, j + 1, l, k] <= s[i, l, k] + bigM * (1 - z[i, j + 1, l, k]))
+    for i in range(m):
+        for k in range(t):
+            for j in range(n):
+                for l in range(n):
+
+                    '''scheduling constraint'''
+                    M.addConstr(s[i, j + 1, k] + (sd[j + 1] + grid[j + 1, l]) * z[i, j + 1, l, k] <= s[i, l, k] + bigM * (1 - z[i, j + 1, l, k]))
     M.update()

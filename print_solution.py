@@ -28,5 +28,5 @@ def printSolution(M, solution_d, solution_x, solution_y, solution_z, solution_s,
           '\n\ns', var_s[0, :, 0],
           '\n', var_s[1, :, 0],
           '\nz\n', var_z[0, :, :, 0],
-          '\nobj\n', int(M.objVal)
+          '\nobj\n', int(M.objVal),
           )
