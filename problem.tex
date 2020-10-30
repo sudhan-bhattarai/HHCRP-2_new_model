@@ -1,26 +1,58 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
-\usepackage[english]{babel}
-% \setlength{\parindent}{4em}
-\setlength{\parskip}{1em}
-\renewcommand{\baselinestretch}{1.5}
-
-\geometry{a4paper,left=1.25in, right= 1.25in, top=1in, bottom=1in}
-% \usepackage [backend=biber, style=ieee]{biblatex}
-% \addbibresource{references.bib}
-
-\usepackage[square,numbers]{natbib}
-\bibliographystyle{abbrvnat}
-\setcitestyle{authoryear,open={(},close={)}}
-
-
-\title {\textbf{\large Literature Review: Home Healthcare Routing Problem}}
+\title{\textbf{Problem definition}}
 \author {Sudhan Bhattarai}
 \date {October 2020}
+\date{October, 2020}
+\geometry{a4paper, left = 1in, right=1in, left=1in, bottom = 1in}
+\renewcommand{\baselinestretch}{1.5}
+
 \begin{document}
 \maketitle
-
-A home healthcare provider is a type of company destined to provide a periodic medical service to the patients at their own houses. Consequently, a challenge arises to build an efficient visit plan for the human resources available. The challenge is commonly known as Home Healthcare Routing Problem (HHCRP). The HHCRP is similar to the traditional Vehicle Routing Problem (VRP) in which a fleet of vehicles available at a depot goes out to pick or deliver goods to the customers located in different places and finally returns back to the depot. Similarly, in a HHCRP, a fleet of nurses available at the home care center goes out on a tour to serve the patients at their home and finally comes back to the center. Moreover, the problem can be made more realistic by using the standards for nurses' start time, end time, service duration for each patient, qualification of the nurses and more of the patients' demands. My research is about formulating an efficient routing plan for the nurses' such that the total visits are maximized. There have been many remarkable researches in the past to build the realistic yet effectual routing plans which are briefly described in this review.
+\textbf{Notations:}\\
+m = nurse of nurses, nurse index, i = 1, 2, ...., m\\
+n = number of patients, patient index, j, l = 2, 2, ...., n, depot index = 0\\
+j' = index of patients needing multiple nurses on a single visit\\
+t = number of days in planning horizon, day index, k = 1, 2, ...., t\\
+$sd_j$ = service duration for the patient j\\
+$et_j, lt_j$ = earliest and latest service start time at patient j\\
+$tt_{jl}$ = travel time from patient j to l\\
+$U_{ik}$ = total time available to work for a nurse i on day k\\
+$q_j, q2_j, q3_j$ = qualification of $1^{st}$, $2^{nd}$ and $3^{rd}$ nurse demanded by patient j\\
+$Q_i$ = qualification of a nurse i\\
+$N_j$ = number of nurses needed for a visit to patient j\\
+$f_j$ = frequency of visit for a patient j during planning horizon\\
+\par
+\textbf{Decision variables:}\\
+\(\delta_j\) = 1 if patient j is accepted, 0 otherwise \\
+\(x_{i,j}\) = 1 if patient j is assigned to nurse i, 0 otherwise  \\
+\(y_{i,j,k}\) = 1 if patient j is assigned to nurse i on day k, 0 otherwise \\
+\(z_{i,j,l,k}\) = 1 if nurse i travel from patient j to l on day k, 0 otherwise \\
+\(s_{i,j,k}\) = service start time for nurse i at patient j on day k (continuous)\\
+\clearpage
+\textbf{Objective:}\\
+\(max: \sum_{j=1}^n \delta_j\) \hfill (1) \\
+\par
+\textbf{Constraints:}\\
+\(\sum_{i=1}^m x_{ij} = N_j * \delta_j\),\hspace{1cm} \forall j \hfill (2-I) \\
+\(\sum_{i,k} y_{ijk} = N_j v_j  \delta_j\) \hspace{1cm} ,\forall j   \hfill (2-II)\\
+\(y_{ijk} \leq x_{ij} \) \hspace{1cm} \forall i,j,k \hfill (3)\\
+\(x_{ij} = 0\) \hspace{1cm} $\forall$ i,j with $q_j$ $q2_j$ $q3_j$ $\notin$ $Q_i$ \hfill (4)\\
+\(y_{i0k} = 1\) \hspace{1cm} \forall i,k \hfill (5)\\
+\(y_{ijk} + y_{ij,k+\tau} \leq 1\) \hspace{1cm} $\forall{i,j}$ with $v_j$ \in (2,3) \par
+\hspace{3.5cm} $\forall$ $\tau$, k with 1 $\leq$ $\tau$ $\leq$ 4-$v_j$, 1 $\leq$ k $\leq$ 5 \hfill (6) \\
+\(\sum_{l} z_{ijlk} = y_{ijk}\) \hspace{1cm} $\forall$ j, i, k \hfill (7-I)\\
+\(\sum_{j} z_{ijlk} = y_{ilk}\) \hspace{1cm} \forall l, i, k \hfill (7-II) \\
+\(s_{ijk} \leq M y_{ijk}\) \hspace{1cm} \forall j,i,k \hfill (8-I) \\
+\(s_{ijk} + (sd_j + tt_{jl}) z_{ijlk} \leq s_{1lk} + M (1-z_{ijlk})\) \hspace{1cm} \forall j,l,i,k \hfill (8-II)\\
+\(s_{i'j'k} \leq s_{ij'k} + M(2-y_{ij'k} - y_{i'j'k})\) \hspace{1cm} \forall i, i', j', k \hfill (9-I) \\
+\(s_{i'j'k} \geq s_{ij'k} - M(2-y_{ij'k} - y_{i'j'k})\) \hspace{1cm} \forall i, i', j', k \hfill (9-II) \\
+\(z_{i0jk} tt_{0j} + s_{ilk} + (tt_{l0} + sd_{l})z_{il0k} \leq U_{ik} + M(2-z_{il0k}-z_{i0jk})\) \hspace{1cm} \forall i,j,l,k \hfill (10)\\
+\(s_{ijk} + M(1-y_{ijk}) \geq et_{j} \) \hspace{1cm} \forall i,j,k \hfill (11-I)\\
+\(s_{ijk} + sd_{j} - M(1-y_{ijk}) \leq lt_{j}\) \hspace{1cm} \forall i,j,k \hfill (11-II)\\
+\(d_j, x_{ij}, y_{ijk}, z_{ijlk} \in (0,1); s_{ijk} \in\) $\mathbb{R}$ \hfill (12)\\
+\par
+Equation (1) represent the objective function which is to maximize the total number of patients accepted in planning horizon. Constraints (2) to (6) are the assignment constraints while constraints (7) to (12) are the scheduling constraints. Constraint (2) makes sure that the accepted patients are assigned to the number of nurses required by the patients on every visits. Constraint (3) makes sure that the assigned patients can be scheduled for a day to the respective nurses. Qualification requirement is satisfied by constraint (4). Constraint (5) ensures that every nurses visit depot every days. Number of days between visit days for multiple visits in a week is satisfied by constraint (6). Constraint (7) makes sure that the arrival to and the departure from every patient nodes for a nurse on a day is equal to the assignment decision of that patient for the same nurse on the same day. Service start time of every patients on a day is determined by constraint (8). Constraint (9) makes sure that the service start time of multiple nurses working together on a day is same. Constraint (10) ensures that the total work time of all nurses in a day can't exceed their total service time. Windows of visit time for every patients is satisfied by Constraint (11). Nature of variables is defined by constraint (12).
 
 \end{document}
